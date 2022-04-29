@@ -30,10 +30,9 @@ jobs:
     - name: Run test
       run: mvn clean test
     - name: Deploy to Heroku
-      uses: actions/checkout@v2
       uses: akhileshns/heroku-deploy@v3.12.12
       with:
         heroku_api_key: ${{secrets.HEROKU_API_KEY}}
         heroku_app_name: ${{secrets.heroku_app_name}}
         heroku_email: ${{secrets.heroku_email}}
-        branch: ${{github.ref_name}}:master
+        branch: ${{github.ref_name}}
