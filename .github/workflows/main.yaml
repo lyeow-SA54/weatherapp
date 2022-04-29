@@ -9,12 +9,12 @@ jobs:
     - name: echo the date
       run: echo "The current time and date is $(date)"
     - name: echo the current branch
-      run: echo ${{github.ref_name }}
+      run: echo ${{github.ref_name}}
 
   test_and_deploy:
     runs-on: ubuntu-latest
     env:
-      OPENWEATHERMAP_KEY: ${{ secrets.openweathermap_api }}
+      OPENWEATHERMAP_KEY: ${{secrets.openweathermap_api}}
     steps:
     - name: Checkout the source
       uses: actions/checkout@v3
@@ -29,3 +29,11 @@ jobs:
         maven-version: 3.8.2
     - name: Run test
       run: mvn clean test
+    - name: Deploy to Heroku
+      uses: actions/checkout@v2
+      uses: akhileshns/heroku-deploy@v3.12.12
+      with:
+        heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+        heroku_app_name: ${{secrets.heroku_app_name}}
+        heroku_email: ${{secrets.heroku_email}}
+        branch: ${{github.ref_name}}:master
